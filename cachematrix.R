@@ -1,3 +1,5 @@
+################################################################################
+##
 ## The cacheSolve() and makeCacheMatrix() functions work together to compute
 ## and cache the inverse of a matrix either initially passed in as an argument
 ## to makeCacheMatrix() or set later by a call to the set() function as defined
@@ -5,6 +7,8 @@
 ##
 ## The cacheSolve() function computes the inverse of the matrix stored in the
 ## makeCacheMatrix() closure.
+##
+################################################################################
 
 
 ## Function Name:  makeCacheMatrix
@@ -72,40 +76,4 @@ cacheSolve <- function(mx_init, ...) {
     invmx_cached <- solve(mx)
     mx_init$setInvMatrix(invmx_cached)
     invmx_cached
-}
-
-
-makeVector <- function(x = numeric()) {
-    m <- NULL
-    set <- function(y) {
-        x <<- y
-        m <<- NULL
-    }
-    get <- function() x
-    setmean <- function(mean) {
-        m <<- mean
-    }
-    getmean <- function() m
-
-    list(set = set, get = get,
-         setmean = setmean,
-         getmean = getmean)
-}
-
-cachemean <- function(x, ...) {
-    m <- x$getmean()
-    if(!is.null(m)) {
-        message("getting cached data")
-        return(m)
-    }
-    data <- x$get()
-    m <- mean(data, ...)
-    x$setmean(m)
-    m
-}
-
-show_env <- function(){
-    list(ran.in = environment(),
-         parent = parent.env(environment()),
-         objects = ls.str(environment()))
 }
